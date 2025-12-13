@@ -1,0 +1,32 @@
+{
+  "name": "streaming-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "production": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alialaa14/Streaming-Api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Alialaa14/Streaming-Api/issues"
+  },
+  "homepage": "https://github.com/Alialaa14/Streaming-Api#readme",
+  "dependencies": {
+    "cloudinary": "^2.8.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "joi": "^18.0.2",
+    "mongoose": "^9.0.1",
+    "multer": "^2.0.2",
+    "uuid": "^13.0.0"
+  }
+}

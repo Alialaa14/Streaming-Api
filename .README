@@ -1,0 +1,26 @@
+/*
+Defination of Streaming Api 
+====================================
+Video Schema : 
+title 
+description
+thumnail 
+url 
+video list category
+child propriate 
+preview of video
+
+ - upload Video 
+ - update video 
+ - delete video
+ - like video 
+ - dislike video
+ - comment to video 
+ - download videos
+ - save video to watch later
+ - get all videos of certain channel
+
+
+
+====================================
+*/ 
