@@ -27,7 +27,7 @@ export const uploadVideo = async (req, res , next) => {
             console.log(result)
         })
        // DELETE LOCAL VIDEO
-          fs.unlink(video.path, (err) => {
+      fs.unlink(video.path, (err) => {
               if (err) console.error("Failed to delete local video:", err);
           });
         // Save Video to DB
