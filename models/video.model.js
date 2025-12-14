@@ -11,12 +11,12 @@ const videoSchema = new Schema({
     }
      , 
      thumbnail : {
-        type:String , 
-        required:true
+        public_id : {type:String , required:true} , 
+        url : {type:String , required:true} , 
     } , 
     url : {
-        public_id:String , 
-        url : String
+        public_id : {type:String} , 
+        url : {type:String} 
     }
      , 
      views : {
@@ -34,7 +34,7 @@ const videoSchema = new Schema({
      } , 
      tags:{
         type:String , 
-        default : []
+        default : ""
     } , 
     comments : {
         type:[Types.ObjectId] , 

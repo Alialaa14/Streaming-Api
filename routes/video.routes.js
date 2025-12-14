@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { commentVideo, deleteVideo, dislikeVideo, downloadVideo, getVideosOfChannel, likeVideo, saveVideo, updateVideo, uploadVideo } from "../controler/video.controler.js";
-import upload from "../utils/uploadVideo.js"
+import upload from "../utils/Upload.js"
 // upload Video
 //update Video with id 
 //delete Video with id 
@@ -17,8 +17,8 @@ import upload from "../utils/uploadVideo.js"
 const videoRouter = Router()
 
 videoRouter
-.post("/video" ,upload.single("video"), uploadVideo)
-.patch("/video/:id" , updateVideo)
+.post("/video" ,upload.fields([{name : "video" , maxCount:1} , {name : "thumbnail" , maxCount:1}]), uploadVideo)
+.patch("/video/:id" ,upload.fields([{name:"thumbnail" , maxCount:1}]) ,  updateVideo)
 .delete("/video/:id" , deleteVideo)
 .post("/video/like/:id" , likeVideo)
 .post("/video/dislike/:id" , dislikeVideo)
