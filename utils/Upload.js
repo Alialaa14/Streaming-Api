@@ -25,15 +25,15 @@ const storage = diskStorage({
     if (file.fieldname === "video") {
       const ext = path.extname(file.originalname);
       const filename = "video _" + uuid() + ext;
-      cb(null, filename);
+      return cb(null, filename);
     }
     if (file.fieldname === "thumbnail") {
       const ext = path.extname(file.originalname);
       const filename = "thumbnail" + uuid() + ext;
-      cb(null, filename);
+     return cb(null, filename);
     }
 
-   
+   return cb(new Error("Invalid file name"), false);
   }
 })
 
@@ -49,11 +49,8 @@ const fileFilter = (req , file , cb)=>{
   }
   if (file.fieldname === "thumbnail") {
     if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-      if (file.size > 10 * 1024 * 1024) {
-        cb(new Error("Image size should be less than 10MB"), false);
-      }
       cb(null , true);
-    } 
+    }
     else {
         cb(new Error("png and jpeg files only are allowed"), false);
     }
