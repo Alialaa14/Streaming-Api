@@ -1,6 +1,20 @@
 import { Router } from "express";
-import { commentVideo, deleteVideo, dislikeVideo, downloadVideo, getVideosOfChannel, likeVideo, saveVideo, updateVideo, uploadVideo } from "../controler/video.controler.js";
+import { 
+         deleteVideo, 
+         dislikeVideo, 
+         downloadVideo,
+         getChannelVideos,
+         likeVideo,
+         saveVideo, 
+         updateVideo, 
+         uploadVideo ,
+         getVideo,
+         getTimeLineVideos,
+      } from "../controler/video.controler.js";
 import upload from "../utils/Upload.js"
+import {isAuthenticated} from "../middleware/isAuthenticated.js"
+
+
 // upload Video
 //update Video with id 
 //delete Video with id 
@@ -17,15 +31,17 @@ import upload from "../utils/Upload.js"
 const videoRouter = Router()
 
 videoRouter
-.post("/video" ,upload.fields([{name : "video" , maxCount:1} , {name : "thumbnail" , maxCount:1}]), uploadVideo)
-.patch("/video/:id" ,upload.fields([{name:"thumbnail" , maxCount:1}]) ,  updateVideo)
-.delete("/video/:id" , deleteVideo)
-.post("/video/like/:id" , likeVideo)
-.post("/video/dislike/:id" , dislikeVideo)
-.post("/video/comment/:id" , commentVideo)
-.get("/video/download/:id", downloadVideo)
-.post("/video/save/:id" ,saveVideo)
-.get("/video/channel/:id" , getVideosOfChannel)
+.get("/timeline" , isAuthenticated , getTimeLineVideos)
+.post("/" ,isAuthenticated,upload.fields([{name : "video" , maxCount:1} , {name : "thumbnail" , maxCount:1}]), uploadVideo)
+.patch("/:id" , isAuthenticated, upload.fields([{name:"thumbnail" , maxCount:1}]) ,  updateVideo)
+.delete("/:id" , isAuthenticated, deleteVideo)
+.post("/like/:id" , isAuthenticated , likeVideo)
+.post("/dislike/:id" ,isAuthenticated ,  dislikeVideo)
+.get("/download/:id",isAuthenticated , downloadVideo)
+.post("/save/:id" ,isAuthenticated , saveVideo)
+.get("/:id" ,isAuthenticated ,  getVideo)
+.get("/channel/:id" ,isAuthenticated ,  getChannelVideos)
+
 
 
 export default videoRouter

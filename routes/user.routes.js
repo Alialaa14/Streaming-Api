@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register , login , logout , resetPassword , sendOtp , updateProfile, verifyAccount, verifyOtp , sendOtpVerification } from "../controler/user.controler.js";
+import { register , login , logout , resetPassword , sendOtp , updateProfile, verifyAccount, verifyOtp , sendOtpVerification, subscribeChannel, unsubscribeChannel } from "../controler/user.controler.js";
 import {isAuthenticated} from "../middleware/isAuthenticated.js"
 import uploadPfPic from "../utils/upload_ProfilePic.js";
 const userRouter = Router();
@@ -14,6 +14,8 @@ userRouter
 .patch ("/update-profile" ,isAuthenticated , uploadPfPic.single("pf-image") ,  updateProfile)
 .post("/verificationOtp" , isAuthenticated , sendOtpVerification)
 .post("/verify-account" , isAuthenticated , verifyAccount)
+.post("/subscribe/:id" , isAuthenticated , subscribeChannel)
+.delete("/unsubscribe/:id" , isAuthenticated , unsubscribeChannel)
 
 
 export default userRouter

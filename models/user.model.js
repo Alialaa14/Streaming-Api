@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { Schema , model } from "mongoose";
 
 const userSchema = new Schema({
@@ -37,11 +38,16 @@ const userSchema = new Schema({
       isVerified : {
         type:Boolean , 
         default:false
+      } , 
+      subscriptions : {
+        type : [Types.ObjectId] ,
+        ref:"User" , 
+         default: []
       }
 }
 , {timestamps:true})
 
 
-const User = model("user" , userSchema)
+const User = model("User" , userSchema)
 
 export default User

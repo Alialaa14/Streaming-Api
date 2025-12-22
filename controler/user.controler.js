@@ -6,6 +6,7 @@ import cloudinary from "../utils/cloudinary.js"
 import { sendEmail } from "../utils/sendEmail.js"
 import {emailTemplate_PasswordReset , emailTemplate_Verification} from "../utils/emailTemplates.js"
 import { customAlphabet } from "nanoid"
+import mongoose from "mongoose"
 // Register
 export const register = async (req , res , next)=>{
   try {
@@ -367,4 +368,58 @@ export const verifyAccount = async (req, res , next)=>{
   } catch (error) {
     return next(new Error(error.message))
   }
+}
+
+export const subscribeChannel = async (req, res, next) => {
+  try {
+    const channelId = req.params.id
+    const userId = req.user
+
+    if (!mongoose.Types.ObjectId.isValid(channelId) || !channelId) {
+      return res.status(400).json({ success: false, message: "Invalid Channel ID" })
+    }
+
+    if (userId==channelId) {
+      return res.status(400).json({ success: false, message: "You can't subscribe to yourself" })
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $addToSet: { subscriptions: channelId } }, // ✅ correct usage
+      { new: true }
+    )
+
+    if (!updatedUser) {
+      return res.status(400).json({ success: false, message: "Subscription failed" })
+    }
+
+    return res.status(201).json({
+      success: true,
+      message: "Subscribed successfully"
+    })
+
+  } catch (error) {
+    next(error)
+  }
+}
+
+
+
+// UNSUBSCRIBE CHANNEL
+
+export const unsubscribeChannel = async (req , res , next)=>{
+try {
+    const channelId = req.params.id
+    const user = req.user
+    if (user == channelId) return res.status(400).json({success:false , message:"U Can't UnSubscribe To Yourself"})
+    if (!channelId || !mongoose.Types.ObjectId.isValid(channelId)) return res.status(400).json({success:false , message:"We Can't UnSubscribe To This Channel"})
+    
+    const User_ = await User.findByIdAndUpdate({_id:user} , {$pull : {subscriptions : channelId}} , {new:true} )
+
+    if (!User_) return res.status(400).json({success:false  , message: "UnSubscription is not Completed"})
+
+    return res.status(201).json({success:true , message:"UnSubscribed Successfully"})    
+ } catch (error) {
+    return next(new Error(error.message))
+ }
 }

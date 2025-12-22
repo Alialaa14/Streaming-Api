@@ -38,7 +38,8 @@ const videoSchema = new Schema({
     } , 
     comments : {
         type:[Types.ObjectId] , 
-        default : []
+        default : [] , 
+        ref:"Comment"
     } , 
     likes: {
         type:Number ,
@@ -48,14 +49,16 @@ const videoSchema = new Schema({
         type:Number , 
         default:0
     }
-    ,
-    user : {
-        type:Types.ObjectId 
-    }
     , 
     preview : {
        public_id : String , 
        url : String
+    }
+    , 
+    user:{
+        type:Types.ObjectId , 
+        ref:"User" , 
+        required:true
     }
     
 
